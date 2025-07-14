@@ -23,13 +23,43 @@
 -- FROM
 --     source_data
 -- )
+WITH filtered_movies AS (
+    SELECT
+        movie_id,
+        title,
+        release_year,
+        imdb_rating,
+        AVG(imdb_rating) OVER () AS avg_rating_for_all
+    FROM {{ ref('stg_movies') }}
+    WHERE major_genres like '%Romantic%'
+),
 
--- SELECT
--- movie_id,
--- title,
--- release_year,
--- imdb_rating
--- from {{ ref('stg_movies') }}
--- where release_year BETWEEN 2020 and 2025
-select distinct major_genres
-from {{ ref('stg_movies') }}
+rating_comp AS (
+    SELECT
+        movie_id,
+        title,
+        release_year,  
+        imdb_rating,
+        avg_rating_for_all,
+        ABS(imdb_rating-avg_rating_for_all) AS dev_from_main_avg
+    FROM filtered_movies
+)
+
+,ranked as (
+SELECT
+    movie_id,
+    title,
+    release_year,
+    imdb_rating,
+    dev_from_main_avg,
+    avg_rating_for_all,
+    ROW_NUMBER() OVER (ORDER BY dev_from_main_avg) AS rank
+FROM rating_comp)
+
+select
+movie_id
+,title
+,release_year
+,imdb_rating
+,rank
+from ranked where rank <=3
