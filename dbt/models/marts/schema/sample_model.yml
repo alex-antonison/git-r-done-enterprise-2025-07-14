@@ -22,3 +22,25 @@ models:
         config:
           meta: {}
           tags: []
+  - name: least_profitable_film
+    columns:
+      - name: title
+        description: ''
+        config:
+          meta: {}
+          tags: []
+      - name: production_budget
+        description: ''
+        config:
+          meta: {}
+          tags: []
+      - name: worldwide_gross
+        description: ''
+        config:
+          meta: {}
+          tags: []
+      - name: profit
+        description: ''
+        config:
+          meta: {}
+          tags: []
