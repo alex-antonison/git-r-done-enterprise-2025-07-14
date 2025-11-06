@@ -22,11 +22,6 @@ This project deploys a streamlit app at [https://git-r-done-enterprise-2025-07-1
 2. Activate environment `source .venv/bin/activate`
 3. Install packages with `pip install -r requirements.txt`
 
-### Setup pre-commit
-
-1. Install pre-commit `pip install pre-commit`
-2. Setup pre-commit `pre-commit install`
-
 ## Running locally
 
 With the `.venv` environment activated, dbt can be run locally from the [dbt](dbt/) directory. This will be required to be done at least once before you can run the streamlit app locally.
